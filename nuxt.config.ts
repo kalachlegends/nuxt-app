@@ -3,12 +3,25 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
+  css: [
+    "~/assets/css/main.css",
+    "primevue/resources/themes/lara-light-indigo/theme.css",
+    "~/assets/scss/main.scss",
+  ],
   ssr: true,
+  primevue: {
+    components: { include: "*" },
+    cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
+    usePrimeVue: true,
+    directives: {
+      include: "*",
+    },
+  },
   runtimeConfig: { VITE_BASE_URL: process.env.VITE_BASE_URL },
   modules: [
     // ...
     "@pinia/nuxt",
+    "nuxt-primevue",
   ],
   alias: {
     "@style": fileURLToPath(new URL("./assets/scss/", import.meta.url)),
