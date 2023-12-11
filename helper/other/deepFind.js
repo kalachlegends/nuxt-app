@@ -28,4 +28,4 @@ export function deepFind(obj, path, defaultReturn = undefined) {
   return current;
 }
 
-window.deepFind = deepFind;
+// window.deepFind = deepFind;

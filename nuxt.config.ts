@@ -11,6 +11,9 @@ export default defineNuxtConfig({
   ssr: true,
   primevue: {
     components: { include: "*" },
+    options: {
+      ripple: true,
+    },
     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
     usePrimeVue: true,
     directives: {

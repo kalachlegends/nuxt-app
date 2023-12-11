@@ -31,6 +31,16 @@ export const useProductStore = defineStore("Product", () => {
       isMessageError: true,
     }
   );
+  const { usePaginationQueryBaseApi: paginationProductsAPi } = useQueryBase(
+    "get",
+    "/products",
+    {},
+    {
+      version: "0.1",
+      pagination: { limit: 10 },
+    }
+  );
+
   return {
     products,
     fetchProduct,
@@ -38,5 +48,6 @@ export const useProductStore = defineStore("Product", () => {
     fetchProductOne,
     dataOneProduct,
     isLoadProductOne,
+    paginationProductsAPi,
   };
 });

@@ -12,6 +12,7 @@ export const useCategoryStore = defineStore("category", () => {
     "/category",
     [],
     {
+      returnData: true,
       onFailed: () => {
         category.value = [];
       },
@@ -27,6 +28,7 @@ export const useCategoryStore = defineStore("category", () => {
         // console.log(res);
         category.value = category.value.filter((e) => e.id !== data.data.id);
       },
+      returnData: true,
       isMessageSucsess: true,
       isMessageError: true,
     }
@@ -46,6 +48,7 @@ export const useCategoryStore = defineStore("category", () => {
       onSuccsess: async ({ data }) => {
         // console.log(res);
       },
+      returnData: true,
       isMessageSucsess: true,
       isMessageError: true,
     }

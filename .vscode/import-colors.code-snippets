@@ -1,0 +1,10 @@
+{
+  "import colors": {
+    "prefix": "imp-scss",
+    "body": [
+      "@import \"@/assets/scss/layout/_variables.scss\";",
+      "@import \"@/assets/scss/layout/_mixins.scss\";"
+    ],
+    "description": "import variables and mixins"
+  }
+}
