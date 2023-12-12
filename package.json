@@ -11,6 +11,8 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@vueuse/core": "^10.7.0",
+    "@vueuse/nuxt": "^10.7.0",
     "autoprefixer": "^10.4.16",
     "nuxt": "^3.8.2",
     "nuxt-primevue": "^0.2.2",
@@ -22,7 +24,6 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "@vuelidate/core": "^2.0.3",
-    "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
     "pinia": "^2.1.7",
     "primeicons": "^6.0.1",

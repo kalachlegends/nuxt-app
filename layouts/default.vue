@@ -7,6 +7,10 @@ import { useCategoryStore } from "~/components/category/stores/category";
 const category = useCategoryStore();
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
+import { useBuketStore } from "~/components/buket/stores/buket";
+import { useFavoriteStore } from "~/components/favorites/stores/favorite";
+const buket = useBuketStore();
+const favorite = useFavoriteStore();
 const router = useRouter();
 const { data: categories } = await useAsyncData("categories", () =>
   category.fetchCategory()
@@ -70,7 +74,7 @@ const isOutsideClicked = (event) => {
 <template>
   <div>
     <div class="layout-topbar">
-      <router-link to="/admin" class="layout-topbar-logo">
+      <router-link to="/" class="layout-topbar-logo">
         <span>Shoes shop</span>
       </router-link>
       <!-- 
@@ -93,20 +97,27 @@ const isOutsideClicked = (event) => {
       <!-- <button class="p-link layout-topbar-menu-button layout-topbar-button">
       <i class="pi pi-ellipsis-v"></i>
     </button> -->
-
+      {{ buket.countbuket }}
       <div class="layout-topbar-menu">
-        <!-- <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-                <i class="pi pi-calendar"></i>
-                <span>Calendar</span>
-            </button> -->
-
-        <button
+        <nuxt-link to="/cart" v-badge="buket.countbuket">
+          <button class="p-link layout-topbar-button">
+            <i class="pi pi-shopping-cart"></i>
+            <span>Calendar</span>
+          </button>
+        </nuxt-link>
+        <div v-badge="favorite.countFavorites">
+          <button class="p-link layout-topbar-button">
+            <i class="pi pi-heart"></i>
+            <span>Calendar</span>
+          </button>
+        </div>
+        <!-- <button
           @click="storeAuth.handleLogout"
           class="p-link layout-topbar-button"
         >
           <i class="pi pi-sign-out"></i>
           <span>logout</span>
-        </button>
+        </button> -->
       </div>
     </div>
     <Toast />

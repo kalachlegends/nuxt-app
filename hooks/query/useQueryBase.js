@@ -77,7 +77,7 @@ export const useQueryBase = (
   const onFetchFunctionThen = async (resp) => {
     isLoad.value = false;
     let onSuccsess = attrs["onSuccsess"] || (() => "");
-    console.log(resp);
+    // console.log(resp);
     if (attrs["isMessageSucsess"]) {
       toast.add({
         severity: "success",
@@ -96,7 +96,7 @@ export const useQueryBase = (
     }
 
     if (attrs["returnData"]) {
-      console.log(data.value);
+      // console.log(data.value);
       return data.value;
     }
     return resp;
@@ -136,9 +136,9 @@ export const useQueryBase = (
     }
     if (attrs["isValidateApi"] || attrs["isValidate"]) {
       validateApi[1].value = {};
-      console.log(data.value);
+      // console.log(data.value);
       const result = await $v.value.$validate();
-      console.log(validateApi[1].value, $v.value);
+      // console.log(validateApi[1].value, $v.value);
       if (!result) {
         if (attrs["isMessageValidateError"]) {
           toast.add({
@@ -196,7 +196,7 @@ export const useQueryBase = (
   }
   const sortedDataAndFilter = computed(() => {
     let dataNew = data.value;
-    console.log(dataNew);
+    // console.log(dataNew);
     if (attrs["sortedFunc"] && typeof dataNew == "array") {
       dataNew = dataNew.sort(attrs["sortedFunc"]);
     }
@@ -215,7 +215,7 @@ const replaceRouteByObject = (str, obj) => {
   Object.entries(obj).forEach(([key, val]) => {
     const regex = new RegExp(`:${key}`);
     str = str.replace(regex, val);
-    console.log(str);
+    // console.log(str);
   });
   return str;
 };

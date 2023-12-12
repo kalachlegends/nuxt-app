@@ -1,6 +1,8 @@
 <template>
-  <div class="grid grid-cols-2 sm:grid-cols-4">
-    <OneProduct v-for="product in products" :key="product.id" :item="product" />
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div v-for="product in products" :key="product.id">
+      <OneProduct :item="product" />
+    </div>
   </div>
   <!-- <div></div> -->
 </template>

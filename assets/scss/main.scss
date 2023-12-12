@@ -1,2 +1,22 @@
 @import "primeicons/primeicons.css";
 @import "@/assets/scss/layout/layout.scss";
+.card-shadow {
+    border-radius: $borderRadius;
+    padding: 2rem;
+    box-shadow:
+        0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.font-16-to-14 {
+    color: var(--surface-900);
+    @include adaptiv-font(16, 14);
+}
+.border-radius {
+    border-radius: $borderRadius;
+}
+.border-radius-img {
+    img {
+        border-radius: $borderRadius;
+    }
+}

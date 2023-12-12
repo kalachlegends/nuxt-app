@@ -20,13 +20,23 @@ export default defineNuxtConfig({
       include: "*",
     },
   },
+  build: {
+    transpile: ["class-validator"],
+  },
+  vite: {
+    optimizeDeps: {
+      exclude: ["class-validator"],
+    },
+  },
   runtimeConfig: { VITE_BASE_URL: process.env.VITE_BASE_URL },
   modules: [
     // ...
+    "@vueuse/nuxt",
     "@pinia/nuxt",
     "nuxt-primevue",
   ],
   alias: {
+    "class-validator": "class-validator/cjs/index.js",
     "@style": fileURLToPath(new URL("./assets/scss/", import.meta.url)),
     "@page": fileURLToPath(new URL("./components/page/", import.meta.url)),
     "@": fileURLToPath(new URL("./", import.meta.url)),

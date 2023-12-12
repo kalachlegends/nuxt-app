@@ -1,8 +1,12 @@
 <template>
-  <div class="product flex gap-2 flex-col">
+  <NuxtLink
+    :to="`/product/${item.product_meta.route}`"
+    class="product flex gap-2 flex-col"
+  >
     <BaseImgFluid :src="item.image.thumb_image_url" paddingBottom="30%" />
-    <a class="product__title">{{ item.title }}</a>
+    <div class="product__title">{{ item.title }}</div>
     <!-- <Image /> -->
+    <!-- {{ item }} -->
     <!-- <Image preview /> -->
     <!-- <div></div> -->
 
@@ -15,10 +19,19 @@
       <i class="pi pi-heart"></i>
     </div>
 
-    <div class="product__price">
+    <div class="product__price" v-if="item.discount <= 0">
       {{ item.price.toLocaleString("ru") }} {{ item.currency.code }}
     </div>
-  </div>
+
+    <div else class="product__price" v-else>
+      {{ (item.price - item.discount).toLocaleString("ru") }}
+      {{ item.currency.code }}
+      <div class="old">
+        {{ item.price }}
+        {{ item.currency.code }}
+      </div>
+    </div>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -38,6 +51,7 @@ const storeFavite = useFavoriteStore();
   padding: 2.4rem 2rem;
   position: relative;
   cursor: pointer;
+  display: block;
   border-radius: $borderRadius;
   .heart {
     position: absolute;
@@ -66,10 +80,17 @@ const storeFavite = useFavoriteStore();
   }
   &__price {
     font-weight: bold;
-
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+    gap: 10px;
     color: var(--surface-900);
     @include adaptiv-font(16, 14);
     font-size: 1.5rem;
+    .old {
+      @include adaptiv-font(14, 12);
+      text-decoration: line-through;
+    }
     margin-top: 1rem;
   }
   &:hover {

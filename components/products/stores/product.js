@@ -21,12 +21,13 @@ export const useProductStore = defineStore("Product", () => {
   // bind object
   const [fetchProductOne, dataOneProduct, isLoadProductOne] = useQueryBase(
     "get",
-    "/product/:id",
+    "/product/:id?route=true",
     {},
     {
       onSuccsess: async ({ data }) => {
         // console.log(res);
       },
+      returnData: true,
       isMessageSucsess: true,
       isMessageError: true,
     }
