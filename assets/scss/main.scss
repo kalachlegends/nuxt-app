@@ -20,3 +20,28 @@
         border-radius: $borderRadius;
     }
 }
+.color {
+}
+
+.font-16-to-14 {
+    color: var(--surface-900);
+    @include adaptiv-font(16, 14);
+}
+.font-16-to-12 {
+    @include adaptiv-font(16, 12);
+}
+.color-gray-500 {
+    color: var(--gray-500);
+}
+.color-surface-900 {
+    color: var(--surface-900);
+}
+
+.font-14-to-10 {
+    @include adaptiv-font(14, 10);
+}
+.field {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}

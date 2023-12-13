@@ -12,7 +12,7 @@ import { useVuelidate } from "@vuelidate/core";
  * isMessageError: true выдаст уведомление справа
  */
 import { useValidateApi } from "@/helper/defaultRules";
-import { required, maxLengthFunc } from "@/helper/defaultRules";
+import { required, maxLengthFunc, checkEmail } from "@/helper/defaultRules";
 import { ref, computed } from "vue";
 import { useToast } from "primevue/usetoast";
 import { usePaginationQueryBase } from "./usePagination";

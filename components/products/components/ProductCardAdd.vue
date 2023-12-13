@@ -15,7 +15,7 @@
           storeProduct.dataOneProduct.discount
         ).toLocaleString("ru")
       }}
-      {{ storeProduct.dataOneProduct.currency.code }}
+      {{ storeProduct.dataOneProduct.currency.code }} 
       <div class="old">
         {{ storeProduct.dataOneProduct.price }}
         {{ storeProduct.dataOneProduct.currency.code }}
