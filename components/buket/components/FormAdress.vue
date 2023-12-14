@@ -1,73 +1,82 @@
 <template>
   <form @onSubmit="onFinish">
-    <div class="field">
-      <label for="address.city_id">Город</label>
-      <Dropdown
-        :options="storeCity.city"
-        id="address.city_id"
-        optionLabel="name"
-        optionValue="id"
-        v-model.trim="storeBuket.formContact.address.city_id"
-        required="true"
-        autofocus
-        :class="{
-          'p-invalid': getMessageForError(
-            storeBuket.$vFormContact,
-            'address.city_id'
-          ),
-        }"
-      />
-      <small
-        class="p-invalid"
-        v-if="getMessageForError(storeBuket.$vFormContact, 'address.city_id')"
-        >{{
-          getMessageForError(storeBuket.$vFormContact, "address.city_id")
-        }}</small
-      >
+    <div class="flex gap-2">
+      <div class="field w-full">
+        <label for="city_id">Город</label>
+        <Dropdown
+          class="w-full"
+          :options="storeCity.city"
+          id="city_id"
+          optionLabel="name"
+          optionValue="id"
+          v-model.trim="storeBuket.formContact.city_id"
+          required="true"
+          autofocus
+          :class="{
+            'p-invalid': getMessageForError(
+              storeBuket.$vFormContact,
+              'city_id'
+            ),
+          }"
+        />
+        <small
+          class="p-invalid"
+          v-if="getMessageForError(storeBuket.$vFormContact, 'city_id')"
+          >{{ getMessageForError(storeBuket.$vFormContact, "city_id") }}</small
+        >
+      </div>
+      <div class="field w-full">
+        <label for="street">Улица</label>
+        <InputText
+          id="street"
+          class="w-full"
+          v-model.trim="storeBuket.formContact.street"
+          required="true"
+          autofocus
+          :class="{
+            'p-invalid': getMessageForError(storeBuket.$vFormContact, 'street'),
+          }"
+        />
+        <small
+          class="p-invalid"
+          v-if="getMessageForError(storeBuket.$vFormContact, 'street')"
+          >{{ getMessageForError(storeBuket.$vFormContact, "street") }}</small
+        >
+      </div>
     </div>
     <div class="flex gap-2">
       <div class="field">
-        <label for="address.home">Дом</label>
+        <label for="home">Дом</label>
         <InputText
-          id="address.home"
-          v-model.trim="storeBuket.formContact.address.home"
+          id="home"
+          v-model.trim="storeBuket.formContact.home"
           required="true"
           autofocus
           :class="{
-            'p-invalid': getMessageForError(
-              storeBuket.$vFormContact,
-              'address.home'
-            ),
+            'p-invalid': getMessageForError(storeBuket.$vFormContact, 'home'),
           }"
         />
         <small
           class="p-invalid"
-          v-if="getMessageForError(storeBuket.$vFormContact, 'address.home')"
-          >{{
-            getMessageForError(storeBuket.$vFormContact, "address.home")
-          }}</small
+          v-if="getMessageForError(storeBuket.$vFormContact, 'home')"
+          >{{ getMessageForError(storeBuket.$vFormContact, "home") }}</small
         >
       </div>
       <div class="field">
-        <label for="address.city_id">Квартира</label>
+        <label for="city_id">Квартира</label>
         <InputText
-          id="address.flat"
-          v-model.trim="storeBuket.formContact.address.flat"
+          id="flat"
+          v-model.trim="storeBuket.formContact.flat"
           required="true"
           autofocus
           :class="{
-            'p-invalid': getMessageForError(
-              storeBuket.$vFormContact,
-              'address.flat'
-            ),
+            'p-invalid': getMessageForError(storeBuket.$vFormContact, 'flat'),
           }"
         />
         <small
           class="p-invalid"
-          v-if="getMessageForError(storeBuket.$vFormContact, 'address.flat')"
-          >{{
-            getMessageForError(storeBuket.$vFormContact, "address.flat")
-          }}</small
+          v-if="getMessageForError(storeBuket.$vFormContact, 'flat')"
+          >{{ getMessageForError(storeBuket.$vFormContact, "flat") }}</small
         >
       </div>
     </div>

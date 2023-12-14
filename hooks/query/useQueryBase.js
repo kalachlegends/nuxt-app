@@ -38,6 +38,7 @@ export const useQueryBase = (
     isMessageError: false,
     isMessageValidateError: false,
     isValidateApi: false,
+    isSetData: true,
     isValidate: false,
     pagination: {},
   }
@@ -67,7 +68,7 @@ export const useQueryBase = (
       return;
     }
     let rules = replaceCompRules(
-      attrs["rulesComp"]?.value || attrs["rulesComp"],
+      attrs["rulesComp"].value || attrs["rulesComp"],
       validateApi
     );
 
@@ -91,7 +92,9 @@ export const useQueryBase = (
     if (attrs["isValidateApi"] || attrs["isValidate"]) {
       validateApi[1].value = getErrorFromApiJsonOnlyObject(resp);
     }
-    if (Object.keys(attrs.pagination || {}).length == 0) {
+    const setData = attrs["isSetData"] == undefined ? true : setData;
+
+    if (Object.keys(attrs.pagination || {}).length == 0 || setData) {
       data.value = deepFind(resp, keyReturn, defaultval);
     }
 
@@ -138,6 +141,7 @@ export const useQueryBase = (
       validateApi[1].value = {};
       // console.log(data.value);
       const result = await $v.value.$validate();
+      console.log($v);
       // console.log(validateApi[1].value, $v.value);
       if (!result) {
         if (attrs["isMessageValidateError"]) {
@@ -221,6 +225,12 @@ const replaceRouteByObject = (str, obj) => {
 };
 const replaceCompRules = (rules, validateApi) => {
   Object.entries(rules).forEach(([key, value]) => {
+    if (isRef(value)) {
+      value = value?.value;
+    }
+    if (isRef(rules[key])) {
+      return;
+    }
     if (key == "required") {
       rules[key] = required;
       return;

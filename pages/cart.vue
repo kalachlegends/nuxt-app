@@ -65,7 +65,11 @@
               <span>Итого</span>
               {{ storeBuket.totalSumBuket.toLocaleString("ru") }} ₸
             </div>
-            <Button label="Заказать" size="large" />
+            <Button
+              label="Заказать"
+              size="large"
+              @click="storeBuket.handleOrderCreate"
+            />
           </div>
           <div class="flex gap-2 card-shadow flex-col w-full">
             <h4>Контактная информация</h4>

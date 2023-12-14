@@ -13,7 +13,7 @@ export const useValidateApi = (formState) => {
         return {
             $validator: (value) => {
                 message = deepFind(errors.value, keyValidate);
-                console.log(deepFind(errors.value, keyValidate), 'deepFind(errors.value, keyValidate)');
+
                 if (deepFind(errors.value, keyValidate)) {
                     return false;
                 }

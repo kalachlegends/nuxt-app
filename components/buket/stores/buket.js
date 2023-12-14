@@ -9,7 +9,9 @@ import { useConfirm } from "@/hooks/useConfirm";
 import { useToast } from "primevue/usetoast";
 import { useHydration } from "nuxt/app";
 import { required, maxLengthFunc, checkEmail } from "@/helper/defaultRules";
+
 import useVuelidate from "@vuelidate/core";
+import { useCityStore } from "~/components/city/stores/city";
 export const useBuketStore = defineStore("buket", () => {
   const buketList = useLocalStorage("buketList", []);
   const formContact = useLocalStorage("formContact", {
@@ -19,24 +21,12 @@ export const useBuketStore = defineStore("buket", () => {
     email: "",
     is_register: false,
     password: "",
-    address: {
-      city_id: "",
-      home: "",
-    },
+    city_id: "",
+    street: "",
+    home: "",
+    flat: "",
   });
-  const $vFormContact = useVuelidate(
-    computed(() => {
-      return {
-        first_name: { required },
-        phone_number: { required },
-        email: { required, checkEmail },
-        password: {
-          required: formContact.value.is_register ? required : {},
-        },
-      };
-    }),
-    formContact
-  );
+
   const toast = useToast();
   const isBuketHave = (virutalId) => {
     const findItem = buketList.value.find((e) => e.virutalId == virutalId);
@@ -105,10 +95,54 @@ export const useBuketStore = defineStore("buket", () => {
       ...product,
       quantity: 1,
       virutalId,
+      product_variants_ids: selectedVariants.map((e) => e.id),
       selectedVariants,
     });
+  };
+  const {
+    fetchData: createOrder,
+    $v: $vFormContact,
+    isLoad: isLoadOrderCreate,
+  } = useQueryBase("post", "/order", formContact, {
+    isValidate: true,
+    isMessageError: true,
+    isSetData: false,
+    rulesComp: {
+      first_name: { required },
+      phone_number: { required, validateApi: "phone_number" },
+      email: { required, checkEmail, validateApi: "email" },
+      password: {
+        required: computed(() =>
+          formContact.value.is_register ? required : {}
+        ),
+      },
+    },
 
-    const handleOrderCreate = () => {};
+    version: "0.1",
+  });
+  const storeCity = useCityStore();
+  const handleOrderCreate = async () => {
+    const city_name = storeCity.city.find(
+      (e) => e.id == formContact.value.city_id
+    )?.name;
+    await createOrder(
+      {},
+      {
+        ...formContact.value,
+        city_name,
+        total_sum: totalSumBuket.value,
+        address: `${city_name}, ${formContact.value.street}, ${formContact.value.home}, ${formContact.value.flat}`,
+        order_products: buketList.value.map((e) => {
+          return {
+            quantity: e.quantity,
+            product_id: e.id,
+            product_variants_ids: e.product_variants_ids,
+            total_sum: (e.price - e.discount) * e.quantity,
+            variants_selected: e.selectedVariants.map((e) => e.name).join(),
+          };
+        }),
+      }
+    );
   };
   return {
     buketList: skipHydrate(buketList),
@@ -120,6 +154,8 @@ export const useBuketStore = defineStore("buket", () => {
     handleMinusQuantity,
     isCheckQuantity,
     handleAddQuantity,
+    handleOrderCreate,
+    isLoadOrderCreate,
     handleAdd,
     $vFormContact,
   };

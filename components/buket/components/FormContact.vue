@@ -1,42 +1,89 @@
 <template>
-  <form @onSubmit="onFinish">
-    <div class="field">
-      <label for="first_name">Имя</label>
-      <InputText
-        id="first_name"
-        v-model.trim="storeBuket.formContact.first_name"
-        required="true"
-        autofocus
-        :class="{
-          'p-invalid': getMessageForError(
-            storeBuket.$vFormContact,
-            'first_name'
-          ),
-        }"
-      />
-      <small
-        class="p-invalid"
-        v-if="getMessageForError(storeBuket.$vFormContact, 'first_name')"
-        >{{ getMessageForError(storeBuket.$vFormContact, "first_name") }}</small
-      >
+  <form @onSubmit="onFinish" class="flex flex-col gap-2">
+    <div class="flex gap-2">
+      <div class="field">
+        <label for="first_name">Имя</label>
+        <InputText
+          id="first_name"
+          v-model.trim="storeBuket.formContact.first_name"
+          required="true"
+          autofocus
+          :class="{
+            'p-invalid': getMessageForError(
+              storeBuket.$vFormContact,
+              'first_name'
+            ),
+          }"
+        />
+        <small
+          class="p-invalid"
+          v-if="getMessageForError(storeBuket.$vFormContact, 'first_name')"
+          >{{
+            getMessageForError(storeBuket.$vFormContact, "first_name")
+          }}</small
+        >
+      </div>
+      <div class="field">
+        <label for="last_name">Фамилия</label>
+        <InputText
+          id="last_name"
+          v-model.trim="storeBuket.formContact.last_name"
+          required="true"
+          :class="{
+            'p-invalid': getMessageForError(
+              storeBuket.$vFormContact,
+              'last_name'
+            ),
+          }"
+        />
+        <small
+          class="p-invalid"
+          v-if="getMessageForError(storeBuket.$vFormContact, 'last_name')"
+          >{{
+            getMessageForError(storeBuket.$vFormContact, "last_name")
+          }}</small
+        >
+      </div>
     </div>
     <div class="field">
-      <label for="last_name">Фамилия</label>
+      <label for="email">Email</label>
       <InputText
-        id="last_name"
-        v-model.trim="storeBuket.formContact.last_name"
+        id="email"
+        v-model.trim="storeBuket.formContact.email"
         required="true"
         :class="{
-          'p-invalid': getMessageForError(
-            storeBuket.$vFormContact,
-            'last_name'
-          ),
+          'p-invalid': getMessageForError(storeBuket.$vFormContact, 'email'),
         }"
       />
       <small
         class="p-invalid"
-        v-if="getMessageForError(storeBuket.$vFormContact, 'last_name')"
-        >{{ getMessageForError(storeBuket.$vFormContact, "last_name") }}</small
+        v-if="getMessageForError(storeBuket.$vFormContact, 'email')"
+        >{{ getMessageForError(storeBuket.$vFormContact, "email") }}</small
+      >
+    </div>
+    <div class="flex gap-2">
+      <label for="is_register">Зарегистироваться</label>
+      <Checkbox
+        id="is_register"
+        :binary="true"
+        v-model="storeBuket.formContact.is_register"
+      />
+    </div>
+    <div class="field w-full" v-if="storeBuket.formContact.is_register">
+      <label for="password">Пароль</label>
+      <Password
+        id="password"
+        v-model.trim="storeBuket.formContact.password"
+        required="true"
+        class="w-full"
+        :class="{
+          'p-invalid': getMessageForError(storeBuket.$vFormContact, 'password'),
+        }"
+      />
+      <small
+        class="p-invalid"
+        v-if="getMessageForError(storeBuket.$vFormContact, 'password')"
+        >{{ getMessageForError(storeBuket.$vFormContact, "password") }}</small
       >
     </div>
     <div class="field">
@@ -62,26 +109,11 @@
         }}</small
       >
     </div>
+
     <div class="field">
-      <label for="email">Почта</label>
-      <InputText
-        id="email"
-        v-model.trim="storeBuket.formContact.email"
-        required="true"
-        :class="{
-          'p-invalid': getMessageForError(storeBuket.$vFormContact, 'email'),
-        }"
-      />
-      <small
-        class="p-invalid"
-        v-if="getMessageForError(storeBuket.$vFormContact, 'email')"
-        >{{ getMessageForError(storeBuket.$vFormContact, "email") }}</small
-      >
-    </div>
-    <div class="field">
-      <label for="email">Комментарий</label>
+      <label for="comment">Комментарий</label>
       <Textarea
-        id="email"
+        id="comment"
         v-model.trim="storeBuket.formContact.comment"
         required="true"
         :class="{
@@ -103,6 +135,7 @@ import { useQueryBase } from "@/hooks/query/useQueryBase";
 
 import { getMessageForError } from "@/helper/other/getMessageForError";
 import { useBuketStore } from "~/components/buket/stores/buket.js";
+import { Input } from "postcss";
 const emit = defineEmits(["update:formState"]);
 const storeBuket = useBuketStore();
 </script>
