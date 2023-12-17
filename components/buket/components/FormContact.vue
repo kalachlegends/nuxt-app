@@ -1,6 +1,6 @@
 <template>
   <form @onSubmit="onFinish" class="flex flex-col gap-2">
-    <div class="flex gap-2">
+    <div class="flex gap-2 md:flex-row flex-col">
       <div class="field">
         <label for="first_name">Имя</label>
         <InputText

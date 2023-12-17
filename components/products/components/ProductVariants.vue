@@ -1,5 +1,5 @@
 <template>
-  <div class="product-info-and-add">
+  <div class="product-info-and-add mb-2">
     <div class="product-info-and-add__options font-bold">
       <div
         class="product-info-and-add__option"
@@ -7,16 +7,18 @@
         :class="{ active: product_option.selected }"
         :key="product_option.id"
       >
-        <div class="product-info-and-add__option-title">
+        <div class="product-info-and-add__option-title mb-2">
           {{ product_option.name }}
         </div>
         <div class="product-info-and-add__variants">
           <div
             v-ripple
             class="product-info-and-add__variant"
-            v-for="item in product_option.product_variants"
+            v-for="item in product_option.product_option_value"
             :key="item.id"
-            @click="() => handleSelect(item, product_option.product_variants)"
+            @click="
+              () => handleSelect(item, product_option.product_option_value)
+            "
             :class="{ active: item.selected }"
           >
             {{ item.name }}
@@ -36,9 +38,9 @@ import { useProductStore } from "@/components/products/stores/product";
 const storeProduct = useProductStore();
 
 const isProductOptions = computed(() => props.item.product_options.length > 0);
-const handleSelect = (item, product_variants) => {
-  console.log(item, product_variants);
-  product_variants.forEach((element) => (element.selected = false));
+const handleSelect = (item, product_option_value) => {
+  console.log(item, product_option_value);
+  product_option_value.forEach((element) => (element.selected = false));
   item.selected = true;
 };
 </script>

@@ -88,16 +88,16 @@ export const useQueryBase = (
       });
     }
     const keyReturn = attrs["keyReturn"] || "data.data";
-    onSuccsess(resp, attrs);
     if (attrs["isValidateApi"] || attrs["isValidate"]) {
       validateApi[1].value = getErrorFromApiJsonOnlyObject(resp);
     }
-    const setData = attrs["isSetData"] == undefined ? true : setData;
+    const setData = attrs["isSetData"] == undefined ? true : attrs["isSetData"];
 
-    if (Object.keys(attrs.pagination || {}).length == 0 || setData) {
+    if (Object.keys(attrs.pagination || {}).length == 0 && setData) {
       data.value = deepFind(resp, keyReturn, defaultval);
     }
 
+    onSuccsess(resp, attrs);
     if (attrs["returnData"]) {
       // console.log(data.value);
       return data.value;

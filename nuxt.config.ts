@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {},
   css: [
     "~/assets/css/main.css",
     "primevue/resources/themes/lara-light-indigo/theme.css",

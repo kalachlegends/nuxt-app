@@ -84,20 +84,29 @@ const isOutsideClicked = (event) => {
     >
       <i class="pi pi-bars"></i>
     </button> -->
-      <div>
-        <button
-          v-for="category in categories"
-          :key="category.id"
-          class="p-link layout-menu-button"
-        >
+      <nuxt-link to="/catalog">
+        <Button link class="p-link layout-menu-button"> Каталог </Button>
+      </nuxt-link>
+      <nuxt-link
+        v-for="category in categories"
+        :key="category.id"
+        :to="'/category/' + category.category_meta.route"
+      >
+        <Button link class="p-link layout-menu-button">
           {{ category.title }}
-        </button>
-      </div>
+        </Button>
+      </nuxt-link>
 
       <!-- <button class="p-link layout-topbar-menu-button layout-topbar-button">
       <i class="pi pi-ellipsis-v"></i>
     </button> -->
-      {{ buket.countbuket }}
+      <!-- {{ buket.countbuket }} -->
+      <!-- <nuxt-link to="/cart" >
+        <button class="p-link layout-topbar-button">
+          <i class="pi pi-shopping-cart"></i>
+          <span>Calendar</span>
+        </button>
+      </nuxt-link> -->
       <div class="layout-topbar-menu">
         <nuxt-link to="/cart" v-badge="buket.countbuket">
           <button class="p-link layout-topbar-button">
@@ -127,4 +136,14 @@ const isOutsideClicked = (event) => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+</style>

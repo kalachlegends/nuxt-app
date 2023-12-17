@@ -1,10 +1,37 @@
 <template>
-  <NuxtLink
-    :to="`/product/${item.product_meta.route}`"
-    class="product flex gap-2 flex-col"
-  >
-    <BaseImgFluid :src="item.image.thumb_image_url" paddingBottom="30%" />
-    <div class="product__title">{{ item.title }}</div>
+  <!-- <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+    <div class="mb-3">
+      <img
+        :src="
+          'https://primefaces.org/cdn/primevue/images/product/' +
+          data.image
+        "
+        :alt="slotProps.data.name"
+        class="w-6 shadow-2"
+      />
+    </div>
+    <div>
+      <h4 class="mb-1">{{ slotProps.data.name }}</h4>
+      <h6 class="mt-0 mb-3">${{ slotProps.data.price }}</h6>
+      <Tag
+        :value="slotProps.data.inventoryStatus"
+        :severity="getSeverity(slotProps.data.inventoryStatus)"
+      />
+      <div class="mt-5 flex align-items-center justify-content-center gap-2">
+        <Button icon="pi pi-search" rounded />
+        <Button icon="pi pi-star-fill" rounded severity="secondary" />
+      </div>
+    </div>
+  </div> -->
+  <div class="product flex gap-2 flex-col">
+    <NuxtLink :to="`/product/${item.product_meta.route}`">
+      <BaseImgFluid :src="item.image.original_image_url" paddingBottom="30%" />
+    </NuxtLink>
+    <NuxtLink
+      :to="`/product/${item.product_meta.route}`"
+      class="product__title"
+      >{{ item.title }}</NuxtLink
+    >
     <!-- <Image /> -->
     <!-- {{ item }} -->
     <!-- <Image preview /> -->
@@ -13,7 +40,7 @@
     <div
       class="heart"
       v-ripple
-      @click="storeFavite.handleAdd(item)"
+      @click.stop="storeFavite.handleAdd(item)"
       :class="{ active: storeFavite.isFavoriteHave(item.id) }"
     >
       <i class="pi pi-heart"></i>
@@ -31,7 +58,7 @@
         {{ item.currency.code }}
       </div>
     </div>
-  </NuxtLink>
+  </div>
 </template>
 
 <script setup>

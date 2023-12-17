@@ -25,6 +25,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@vuelidate/core": "^2.0.3",
     "axios": "^1.6.2",
+    "material-icons": "^1.13.12",
     "pinia": "^2.1.7",
     "primeicons": "^6.0.1",
     "sass": "^1.69.5"

@@ -1,6 +1,6 @@
 <template>
   <form @onSubmit="onFinish">
-    <div class="flex gap-2">
+    <div class="flex gap-2 md:flex-row flex-col">
       <div class="field w-full">
         <label for="city_id">Город</label>
         <Dropdown
@@ -25,7 +25,7 @@
           >{{ getMessageForError(storeBuket.$vFormContact, "city_id") }}</small
         >
       </div>
-      <div class="field w-full">
+      <div class="field w-full flex-wrap">
         <label for="street">Улица</label>
         <InputText
           id="street"
@@ -44,7 +44,7 @@
         >
       </div>
     </div>
-    <div class="flex gap-2">
+    <div class="md:flex-row flex-col gap-2">
       <div class="field">
         <label for="home">Дом</label>
         <InputText

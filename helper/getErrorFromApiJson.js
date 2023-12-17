@@ -34,10 +34,13 @@ export const getError = (e, customMessage = "Неизвестный тип ош�
     return e;
   }
   const error = deepFind(e, "response.data");
+  if (error == undefined) {
+    return customMessage;
+  }
   if (error?.error?.message) {
     return error?.error?.message;
   }
-  console.log(error.error);
+
   if (typeof error.error == "object") {
     return Object.entries(error.error)
       .map(([key, val]) => {

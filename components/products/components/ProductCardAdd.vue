@@ -1,31 +1,57 @@
 <template>
   <div class="product-card-add">
+    <!-- {{ storeProduct.dataOrVariantOrProduct }} -->
+    <!-- {{ storeProduct.dataOrVariantOrProduct }} -->
+    <div
+      class="text-green-500 text-xl"
+      v-if="
+        storeProduct.dataOrVariantOrProduct.quantity_available >= 1 ||
+        !storeProduct.dataOrVariantOrProduct.is_check_quantity
+      "
+    >
+      Есть в наличии
+    </div>
+    <div class="text-red-500" v-else>Нету в наличии</div>
     <div
       class="product-card-add__price"
       v-if="storeProduct.dataOneProduct.discount <= 0"
     >
-      {{ storeProduct.dataOneProduct.price.toLocaleString("ru") }}
+      {{ storeProduct.dataOrVariantOrProduct.price.toLocaleString("ru") }}
       {{ storeProduct.dataOneProduct.currency.code }}
     </div>
 
     <div else class="product-card-add__price" v-else>
       {{
         (
-          storeProduct.dataOneProduct.price -
+          storeProduct.dataOrVariantOrProduct.price -
           storeProduct.dataOneProduct.discount
         ).toLocaleString("ru")
       }}
-      {{ storeProduct.dataOneProduct.currency.code }} 
+      {{ storeProduct.dataOneProduct.currency.code }}
       <div class="old">
-        {{ storeProduct.dataOneProduct.price }}
+        {{ storeProduct.dataOrVariantOrProduct.price }}
         {{ storeProduct.dataOneProduct.currency.code }}
       </div>
     </div>
+    <div
+      class="mb-2"
+      v-if="
+        storeProduct.dataOrVariantOrProduct.quantity_available >= 1 &&
+        storeProduct.dataOrVariantOrProduct.is_check_quantity
+      "
+    >
+      Оставшейся количество:
+      {{ storeProduct.dataOrVariantOrProduct.quantity_available }}
+    </div>
 
     <Button
-      @click="buket.handleAdd(storeProduct.dataOneProduct)"
+      @click="buket.handleAdd(storeProduct.dataOrVariantOrProduct)"
       label="Добавить в корзину"
       raised
+      :disabled="
+        storeProduct.dataOrVariantOrProduct.quantity_available <= 0 &&
+        storeProduct.dataOrVariantOrProduct.is_check_quantity
+      "
       icon="pi pi-cart-plus"
     />
   </div>

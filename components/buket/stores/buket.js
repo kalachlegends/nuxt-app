@@ -12,8 +12,10 @@ import { required, maxLengthFunc, checkEmail } from "@/helper/defaultRules";
 
 import useVuelidate from "@vuelidate/core";
 import { useCityStore } from "~/components/city/stores/city";
+import { useProductStore } from "~/components/products/stores/product";
 export const useBuketStore = defineStore("buket", () => {
   const buketList = useLocalStorage("buketList", []);
+  const isModalShow = ref(false);
   const formContact = useLocalStorage("formContact", {
     first_name: "",
     last_name: "",
@@ -28,6 +30,7 @@ export const useBuketStore = defineStore("buket", () => {
   });
 
   const toast = useToast();
+  const storeProduct = useProductStore();
   const isBuketHave = (virutalId) => {
     const findItem = buketList.value.find((e) => e.virutalId == virutalId);
     return findItem == undefined ? false : true;
@@ -50,63 +53,73 @@ export const useBuketStore = defineStore("buket", () => {
     item.quantity > 1 ? item.quantity-- : null;
   };
   const handleAddQuantity = (item) => {
-    // console.log(item)
+    // // console.log(item)
     if (!item.is_check_quantity) {
       item.quantity++;
       return;
     }
-    if (
-      item.quantity <= item.product_quantity.quantity_available &&
-      item.is_check_quantity
-    ) {
+    let quantity =
+      item.type == "product"
+        ? item.product_quantity.quantity_available
+        : item.quantity_available;
+    if (item.quantity < quantity && item.is_check_quantity) {
       item.quantity++;
     }
   };
   const isCheckQuantity = (item) => {
-    return (
-      item.quantity <= item.product_quantity.quantity_available &&
-      item.is_check_quantity
-    );
+    let quantity =
+      item.type == "product"
+        ? item.product_quantity.quantity_available
+        : item.quantity_available;
+    return item.quantity <= quantity && item.is_check_quantity;
   };
-  const handleAdd = (product) => {
-    const { title, id, product_options } = product;
-    let virutalId = product.id;
 
-    const selectedVariants = product_options
-      .reduce((acc, e) => {
-        console.log(e, "e");
-        return [...e.product_variants, ...acc];
-      }, [])
-      .filter((e) => e.selected);
-    virutalId = virutalId + selectedVariants.map((e) => e.id).join();
+  const handleAdd = () => {
+    let virutalId =
+      storeProduct.dataOrVariantOrProduct.type == "product"
+        ? storeProduct.dataOrVariantOrProduct.id
+        : storeProduct.dataOrVariantOrProduct.name_variants_selected;
 
     toast.add({
       severity: "success",
       summary: "success",
-      detail: `Вы товар добавлен в корзину '${title}'`,
+      detail: `Вы товар добавлен в корзину '${storeProduct.dataOrVariantOrProduct.title}'`,
       life: 4000,
     });
     if (isBuketHave(virutalId)) {
+      let item = buketList.value.find((e) => e.virutalId == virutalId);
+      Object.entries(key).forEach(([key, val]) => {
+        item[key] = storeProduct.dataOrVariantOrProduct[key];
+      });
       handleAddQuantity(buketList.value.find((e) => e.virutalId == virutalId));
       return;
     }
 
     buketList.value.push({
-      ...product,
+      ...storeProduct.dataOrVariantOrProduct,
+      product_id: storeProduct.dataOrVariantOrProduct.product_id,
       quantity: 1,
       virutalId,
-      product_variants_ids: selectedVariants.map((e) => e.id),
-      selectedVariants,
+      variants_selected: storeProduct.dataOrVariantOrProduct.names_option || [],
+      name_variants_selected: storeProduct.dataOrVariantOrProduct.name,
+      parent_id: storeProduct.dataOrVariantOrProduct.id,
     });
   };
   const {
     fetchData: createOrder,
     $v: $vFormContact,
     isLoad: isLoadOrderCreate,
+    data: dataOrder,
   } = useQueryBase("post", "/order", formContact, {
     isValidate: true,
     isMessageError: true,
     isSetData: false,
+    onSuccsess: ({ data }) => {
+      console.log(isModalShow);
+      isModalShow.value = true;
+      buketList.value = [];
+      dataOrder.value.id = data.data.id;
+    },
     rulesComp: {
       first_name: { required },
       phone_number: { required, validateApi: "phone_number" },
@@ -134,11 +147,12 @@ export const useBuketStore = defineStore("buket", () => {
         address: `${city_name}, ${formContact.value.street}, ${formContact.value.home}, ${formContact.value.flat}`,
         order_products: buketList.value.map((e) => {
           return {
+            ...e,
             quantity: e.quantity,
-            product_id: e.id,
-            product_variants_ids: e.product_variants_ids,
+
+            parent_id: e.id,
+            product_option_value_ids: e.product_option_value_ids,
             total_sum: (e.price - e.discount) * e.quantity,
-            variants_selected: e.selectedVariants.map((e) => e.name).join(),
           };
         }),
       }
@@ -153,10 +167,12 @@ export const useBuketStore = defineStore("buket", () => {
     totalQuantityBuket,
     handleMinusQuantity,
     isCheckQuantity,
+    isModalShow,
     handleAddQuantity,
     handleOrderCreate,
     isLoadOrderCreate,
     handleAdd,
     $vFormContact,
+    dataOrder,
   };
 });

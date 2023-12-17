@@ -1,4 +1,6 @@
 /* tailwind.css */
+@import 'material-icons/iconfont/material-icons.css';
+
 @layer tailwind-base {
     @tailwind base;
 }

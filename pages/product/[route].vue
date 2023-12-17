@@ -1,7 +1,7 @@
 <template>
   <div class="product-page">
     <h1>{{ product.title }}</h1>
-    <div class="flex card gap-3">
+    <div class="flex card gap-3 flex-col md:flex-row">
       <div class="flex-[1_1_40%] h-1/2">
         <Galleria
           :value="product.product_images"
@@ -29,7 +29,9 @@
         <h2>Описание</h2>
         <div v-html="product.description"></div>
       </div>
-      <div class="flex-[1_1_60%] flex justify-between px-10">
+      <div
+        class="flex-[1_1_60%] flex justify-between px-0 md:px-10 md:flex-row flex-col"
+      >
         <div>
           <ProductVariants :item="product" />
           <!-- <div>{{ product.price }} {{ product.currency.code }}</div> -->
