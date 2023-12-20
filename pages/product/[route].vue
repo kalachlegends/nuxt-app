@@ -49,12 +49,17 @@
 import ProductCardAdd from "~/components/products/components/ProductCardAdd.vue";
 import ProductVariants from "~/components/products/components/ProductVariants.vue";
 import { useProductStore } from "@/components/products/stores/product";
+import { useSeoMetaLocal } from "~/hooks/useSeoMetaLocal";
 const storeProduct = useProductStore();
 const route = useRoute();
 
 const { data: product } = await useAsyncData("product", () =>
   storeProduct.fetchProductOne({ id: route.params.route })
 );
+useSeoMetaLocal({
+  title: product.value.product_meta.meta_title,
+  description: product.value.product_meta.meta_description,
+});
 onMounted(() => {
   product.value.product_images = [
     { image: product.value.image },

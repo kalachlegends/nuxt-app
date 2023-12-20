@@ -16,6 +16,7 @@ import { useProductStore } from "~/components/products/stores/product";
 export const useBuketStore = defineStore("buket", () => {
   const buketList = useLocalStorage("buketList", []);
   const isModalShow = ref(false);
+  const isBuketShow =ref(false)
   const formContact = useLocalStorage("formContact", {
     first_name: "",
     last_name: "",
