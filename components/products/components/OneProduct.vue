@@ -47,15 +47,16 @@
     </div>
 
     <div class="product__price" v-if="item.discount <= 0">
-      {{ item.price.toLocaleString("ru") }} {{ item.currency.code }}
+      {{ item.price.toLocaleString("ru") }}
+      <!-- {{ item.currency.code }} -->
     </div>
 
     <div else class="product__price" v-else>
       {{ (item.price - item.discount).toLocaleString("ru") }}
-      {{ item.currency.code }}
+      <!-- {{ item.currency.code }} -->
       <div class="old">
         {{ item.price }}
-        {{ item.currency.code }}
+        <!-- {{ item.currency.code }} -->
       </div>
     </div>
   </div>

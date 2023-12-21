@@ -17,7 +17,7 @@
       v-if="storeProduct.dataOneProduct.discount <= 0"
     >
       {{ storeProduct.dataOrVariantOrProduct.price.toLocaleString("ru") }}
-      {{ storeProduct.dataOneProduct.currency.code }}
+      <!-- {{ storeProduct.dataOneProduct.currency.code }} -->
     </div>
 
     <div else class="product-card-add__price" v-else>
@@ -27,10 +27,10 @@
           storeProduct.dataOneProduct.discount
         ).toLocaleString("ru")
       }}
-      {{ storeProduct.dataOneProduct.currency.code }}
+      <!-- {{ storeProduct.dataOneProduct.currency.code }} -->
       <div class="old">
         {{ storeProduct.dataOrVariantOrProduct.price }}
-        {{ storeProduct.dataOneProduct.currency.code }}
+        <!-- {{ storeProduct.dataOneProduct.currency.code }} -->
       </div>
     </div>
     <div
